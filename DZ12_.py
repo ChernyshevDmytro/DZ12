@@ -24,21 +24,28 @@ class Phone:
 
     @property
     def value(self):
-        try:
-            ggg = int(self._current_phone[1:])
+        if self._current_phone == None:
+            self._current_phone = ""
+        else:     
+            try:
+                lll = int(self._current_phone[1:])
 
-            if len(self._current_phone) < 13 and len(self._current_phone)>10 and isinstance(ggg, int):
-                return self._current_phone   
-            else: print("Please give correct phone10")
+                if len(self._current_phone) < 13 and len(self._current_phone)>10 and isinstance(lll, int):
+                    return self._current_phone   
+                
 
-        except ValueError:
-                print("Please give correct phone11")
+            except ValueError:
+                
+                #print(self._current_phone[1:])
+                #print("Please give correct phone11")
                 self._current_phone = ""
+                return self._current_phone 
         
 
     @value.setter
     def value(self, phone_setter):
-        if phone_setter != "":
+      
+        if phone_setter != "" :
 
             try:
                 ff = int(phone_setter[1:])
@@ -181,8 +188,11 @@ class AddressBook(UserDict):
             c=""           
             c=self.a[self.index] 
             self.index+=1
-            #print(self.index)      
-            return  c
+            
+            #print(self.index) 
+            
+            
+            return f"Name: {c.name}, phones : {', '.join([str(p.value) for p in c.phones])}"
             
         elif len(self.a) <= self.index: 
             print ('Adress book is ended')
@@ -402,11 +412,15 @@ def main():
 
     def show_func(N=2):
         for i in range (0, N):           
-           print(next(iter(c_b)))
+           print(next(c_b))
 
     def phone_func():
         if name in c_b.data.keys():
-            print(c_b.get(name).phones)
+            jjj=[]
+            for i in c_b.get(name).phones:
+                jjj.append(i.value)
+                #print(len(c_b.get(name).phones))
+                print(f"Name is {name}, phone is {jjj} ")
 
     def add_func():
         if name in c_b.data.keys():
